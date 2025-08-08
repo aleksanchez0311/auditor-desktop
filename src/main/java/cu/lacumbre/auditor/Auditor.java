@@ -18,10 +18,8 @@ public class Auditor {
     public static String defaultModeString = "F";
     private static boolean defaultModeBoolean = false;
 
-//TODO Automatizar el asunto de la asignacion de los id para una verdadera implementacion replicable
 //TODO Implementar la creacion de la base de datos en el primer arranque
 //TODO Implementar usuarios y turnos
-//TODO Implementar flujo de trabajo de lastCost y ponderatedCost
 //TODO cruds a tablemodels para mejorar rendimiento
 //TODO  Verificar que el precio de venta en el reporte de ventas del periodo sea acorde a las variaciones de precio
 //    public static void main(String args[]) throws IOException {
