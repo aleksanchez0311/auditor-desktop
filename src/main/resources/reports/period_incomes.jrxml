@@ -1,0 +1,451 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.6.final using JasperReports Library version 6.20.6-5c96b6aa8a39ac1dc6b6bea4b81168e16dd39231  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Entradas del Periodo" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenResourceMissingType="Empty" uuid="5f4e4537-1925-4e5f-b753-aaed4cca752c">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="215"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="774"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="PostgreSql Local Adapter"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<style name="Title" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<parameter name="TITLE" class="java.lang.String"/>
+	<parameter name="PERIOD" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="FDCP" class="java.lang.Long">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="FDNP" class="java.lang.Long">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="TC" class="java.lang.Double">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="BTC" class="java.lang.Double">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="LFB" class="java.lang.Double">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ENTITY" class="java.lang.Integer"/>
+	<parameter name="NAME" class="java.lang.String"/>
+	<parameter name="COPY" class="java.lang.String"/>
+	<parameter name="SFRFSRM" class="java.lang.Integer"/>
+	<parameter name="SFWRM" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[SELECT O.ID, P.ID as PRODUCT,
+	P.DESCRIPTION,
+	O.AMMOUNT,
+	O.BILLED,
+	TO_TIMESTAMP(FLOOR(EXTRACT(EPOCH FROM O.DATE)) + 86400) AS DATE,
+	(SELECT ABREV
+FROM MEASURE_UNITS
+WHERE 
+	 MEASURE_UNITS.ID = MEASURE_UNIT ) AS ABR,
+	O.VALUE  AS COST
+FROM  ITEMS P
+	JOIN OPERATIONS O ON 
+	 P.ID = O.ITEM 
+WHERE 
+	 O.INCOME = true 
+	 AND O.ENTITY = $P{ENTITY}
+     AND O.OPENING = false  
+	 AND SUBSTRING(P.id::text, LENGTH(SUBSTRING(p.entity::text FROM '^[0-9]+')) + 1, 1) IN ('1', '2') 
+	 AND O.DATE >= TO_TIMESTAMP($P{FDCP})  
+	 AND O.DATE < TO_TIMESTAMP($P{FDNP})
+ORDER BY O.BILLED DESC, O.DATE ASC, P.CODE ASC]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="id"/>
+		<property name="com.jaspersoft.studio.field.label" value="id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="operations"/>
+	</field>
+	<field name="product" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="product"/>
+		<property name="com.jaspersoft.studio.field.label" value="product"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="items"/>
+	</field>
+	<field name="description" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="description"/>
+		<property name="com.jaspersoft.studio.field.label" value="description"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="items"/>
+	</field>
+	<field name="ammount" class="java.lang.Float">
+		<property name="com.jaspersoft.studio.field.name" value="ammount"/>
+		<property name="com.jaspersoft.studio.field.label" value="ammount"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="operations"/>
+	</field>
+	<field name="billed" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.name" value="billed"/>
+		<property name="com.jaspersoft.studio.field.label" value="billed"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="operations"/>
+	</field>
+	<field name="date" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.name" value="date"/>
+		<property name="com.jaspersoft.studio.field.label" value="date"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="operations"/>
+	</field>
+	<field name="abr" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="abr"/>
+		<property name="com.jaspersoft.studio.field.label" value="abr"/>
+	</field>
+	<field name="cost" class="java.lang.Float">
+		<property name="com.jaspersoft.studio.field.name" value="cost"/>
+		<property name="com.jaspersoft.studio.field.label" value="cost"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="operations"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="117" splitType="Stretch">
+			<image hAlign="Right">
+				<reportElement x="0" y="0" width="553" height="60" uuid="2b169127-2a3d-4411-a4aa-c44b23402d88"/>
+				<imageExpression><![CDATA["assets/banner.png"]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement style="Title" x="0" y="60" width="353" height="33" uuid="a46eed15-5428-49ad-8a28-5704dba800ac"/>
+				<textElement verticalAlignment="Middle" markup="none"/>
+				<textFieldExpression><![CDATA[$P{TITLE}]]></textFieldExpression>
+			</textField>
+			<textField pattern="MMMMM/yyyy">
+				<reportElement style="SubTitle" x="397" y="95" width="157" height="22" uuid="58c8ecea-7c2e-4633-a523-b7f08268eee5"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+					<font size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{PERIOD}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Title" x="0" y="95" width="353" height="22" forecolor="#666666" uuid="d2c2f008-75d5-4fcf-939b-70bf683c57ef"/>
+				<textElement verticalAlignment="Bottom" markup="none">
+					<font size="16" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{NAME}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="41" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="35" width="555" height="1" uuid="58e1241a-17e4-4cc6-af97-acce4eb78199"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement style="Column header" x="0" y="21" width="45" height="15" uuid="f9971a4e-c0c7-4938-ba7d-0f5df304352c"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[No.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="45" y="21" width="175" height="15" uuid="888e7358-90e3-41e6-a91b-c83c68d2cf6a">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[Producto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="288" y="21" width="68" height="15" uuid="6009aba2-e06c-4ac2-9bc9-9c0844aba3f6"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[Cantidad]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="220" y="21" width="68" height="15" uuid="5be7fa51-3895-420c-9a3a-532b1fd6ad59">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[Tipo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="356" y="21" width="68" height="15" uuid="bd763fc4-a861-496b-9254-16dc0d8dd73f"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[Costo ($)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="499" y="21" width="55" height="15" uuid="c7bd4aee-a17c-4dc1-8aa8-452607d5353c"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[Fecha]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="424" y="21" width="75" height="15" uuid="a17efdec-be88-49d4-870b-8fb327b07e50"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[Facturado]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="16" splitType="Immediate">
+			<printWhenExpression><![CDATA[$F{product} < $P{SFWRM}]]></printWhenExpression>
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="15" width="555" height="1" forecolor="#000000" uuid="9635409c-8707-46b0-b2dc-c96e2162b7eb">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<textField pattern="###0" isBlankWhenNull="true">
+				<reportElement style="Detail" mode="Transparent" x="0" y="1" width="45" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="0f03264f-3211-48da-aa26-06383cf380fc"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="false">
+				<reportElement style="Detail" mode="Transparent" x="45" y="1" width="175" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="d33e870b-e62b-408b-93af-d60cf431ae86">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{description} +"  (" + $F{abr} + ")"]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement style="Detail" mode="Transparent" x="288" y="0" width="68" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="4e4d9c55-4818-44bb-b2a6-e51a46e98cea"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ammount}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement style="Detail" mode="Transparent" x="220" y="0" width="68" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="9042e4b9-225a-438b-b148-b6c72b9010b5">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{product} < $P{SFWRM} ? "G":""]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement style="Detail" mode="Transparent" x="356" y="1" width="68" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="1d6561ad-b734-4ca4-b6fc-1fc3f5ffc4ed"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cost}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="false">
+				<reportElement style="Detail" mode="Transparent" x="499" y="1" width="55" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="deb42494-1cab-4572-9f86-06091525dae3"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{date}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement style="Detail" mode="Transparent" x="424" y="1" width="75" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="c0567b52-e7f8-43a0-b290-297066bd1404"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{billed} ? "SI":"No"]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="16" splitType="Immediate">
+			<printWhenExpression><![CDATA[$F{product} >= $P{SFWRM} && $F{product} < $P{SFRFSRM}]]></printWhenExpression>
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="15" width="555" height="1" forecolor="#000000" uuid="aee5daf2-dba2-496f-99f3-978d02542170"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<textField pattern="###0" isBlankWhenNull="true">
+				<reportElement style="Detail" mode="Transparent" x="0" y="1" width="45" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="0ef08209-357a-471b-96db-7503ce1d55f8"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="false">
+				<reportElement style="Detail" mode="Transparent" x="45" y="1" width="175" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="288a3351-86c6-4907-9fda-333d483fb478"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{description} +"  (" + $F{abr} + ")"]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement style="Detail" mode="Transparent" x="288" y="1" width="68" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="54b86610-4055-4e44-a2b0-853e66cb234e"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ammount}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement style="Detail" mode="Opaque" x="220" y="0" width="68" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="849d9041-7d55-4041-a0af-1c129b03b045"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{product} >= $P{SFWRM} && $F{product} < $P{SFRFSRM} ? "MP" : ""]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement style="Detail" mode="Transparent" x="356" y="1" width="68" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="691a2ee2-3773-417f-90b7-536b10926bf1"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cost}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="false">
+				<reportElement style="Detail" mode="Transparent" x="499" y="1" width="55" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="f019c482-ab0a-4a39-a1a6-df76a3b0e734"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{date}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement style="Detail" mode="Transparent" x="424" y="1" width="75" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="4b4f1a8e-dbea-467e-b0a6-ce7e7b9d2497"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{billed} ? "SI":"No"]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="16" splitType="Immediate">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<printWhenExpression><![CDATA[$F{product} >= $P{SFRFSRM}]]></printWhenExpression>
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="15" width="555" height="1" forecolor="#000000" uuid="3400d3fd-ef43-46c2-968f-f801ec93c067"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<textField pattern="###0" isBlankWhenNull="true">
+				<reportElement style="Detail" mode="Opaque" x="0" y="0" width="45" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="0182a500-6006-418a-90c5-8bd6cf0a8c9e"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement style="Detail" mode="Opaque" x="45" y="0" width="175" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="91a78222-c037-4799-b5da-dc14c51b9a48">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{description} +"  (" + $F{abr} + ")"]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement style="Detail" mode="Opaque" x="288" y="0" width="68" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="10b1d8d5-7a9e-4574-9745-e0a0dd5570fd"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ammount}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement style="Detail" mode="Opaque" x="356" y="0" width="68" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="c52f43cc-cf7a-471d-8947-1d7fc3e8291f"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cost}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="false">
+				<reportElement style="Detail" mode="Opaque" x="499" y="0" width="55" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="3adb53fa-ffa9-40bd-827f-f5717d1c5bc9"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{date}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement style="Detail" mode="Opaque" x="424" y="0" width="75" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="b2cb8f45-8c16-45a0-a09f-7d0d0add43b4"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{billed} ? "SI":"No"]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement style="Detail" mode="Transparent" x="220" y="0" width="68" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="89461c24-beb2-43c8-819b-dc5d4edd8982"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{product} >= $P{SFRFSRM} ? "LPV" : ""]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="25" splitType="Stretch">
+			<printWhenExpression><![CDATA[$V{PAGE_NUMBER}.equals($P{REPORT_PARAMETERS_MAP}.get("LastPageNumber"))]]></printWhenExpression>
+			<staticText>
+				<reportElement x="131" y="4" width="65" height="14" uuid="ad0f2371-fe9c-45fc-8b02-3877c2c9a5c2"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[GastoTotal:]]></text>
+			</staticText>
+			<textField textAdjust="ScaleFont" pattern="$ #,##0.00">
+				<reportElement x="196" y="4" width="65" height="14" uuid="08caec10-ee61-4727-bb6c-ee146449e50f"/>
+				<textFieldExpression><![CDATA[$P{TC}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="261" y="4" width="60" height="14" uuid="01ecd848-0385-4a8e-8f1f-636a1b94692c"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Facturado:]]></text>
+			</staticText>
+			<textField textAdjust="ScaleFont" pattern="$ #,##0.00">
+				<reportElement x="321" y="4" width="61" height="14" uuid="f97e0e75-af2d-4f58-abe1-713bf62f9460"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{BTC}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="382" y="4" width="115" height="14" uuid="cd76548e-74df-428a-b021-dc74f0d446e6"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Pendiente a Facturar:]]></text>
+			</staticText>
+			<textField textAdjust="ScaleFont" pattern="$ #,##0.00">
+				<reportElement x="497" y="4" width="56" height="14" uuid="83d03aa8-8e5b-4e1f-bc0e-a236d5a4e4ca"/>
+				<textFieldExpression><![CDATA[$P{LFB}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="24" width="555" height="1" uuid="cf8586c8-e26c-4c2a-83d1-91bfcccac3a6"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="25" splitType="Stretch">
+			<textField>
+				<reportElement style="Column header" x="433" y="0" width="80" height="20" uuid="8c1fdf24-6b34-4b81-9109-2c3d0ad65988"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement style="Column header" x="513" y="0" width="40" height="20" uuid="126f73cf-555f-4f1a-b7d0-307885b2d720"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement style="Column header" x="0" y="0" width="152" height="20" uuid="1de12456-69e7-4407-991a-dcdab9828623"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch">
+			<printWhenExpression><![CDATA[new Boolean($P{REPORT_PARAMETERS_MAP}.put("LastPageNumber", $V{PAGE_NUMBER}).equals("dummyPrintWhen"))]]></printWhenExpression>
+		</band>
+	</summary>
+</jasperReport>

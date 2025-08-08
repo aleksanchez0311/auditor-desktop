@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch4jConfig>
+  <dontWrapJar>false</dontWrapJar>
+  <headerType>gui</headerType>
+  <jar>C:\Users\aleks\Documents\WorkSpaces\Java\auditor\target\auditor-1.0.6.2-STABLE.jar</jar>
+  <outfile>C:\Users\aleks\Documents\WorkSpaces\Java\auditor\target\Auditor.exe</outfile>
+  <errTitle>errors.log</errTitle>
+  <cmdLine></cmdLine>
+  <chdir>.</chdir>
+  <priority>normal</priority>
+  <downloadUrl></downloadUrl>
+  <supportUrl></supportUrl>
+  <stayAlive>false</stayAlive>
+  <restartOnCrash>true</restartOnCrash>
+  <manifest></manifest>
+  <icon>C:\Users\aleks\Documents\WorkSpaces\Java\auditor\src\main\resources\assets\icon.ico</icon>
+  <singleInstance>
+    <mutexName>auditor</mutexName>
+    <windowTitle></windowTitle>
+  </singleInstance>
+  <jre>
+    <path>%JAVA_HOME%;%PATH%</path>
+    <requiresJdk>false</requiresJdk>
+    <requires64Bit>false</requires64Bit>
+    <minVersion></minVersion>
+    <maxVersion></maxVersion>
+  </jre>
+  <versionInfo>
+    <fileVersion>1.0.6.2</fileVersion>
+    <txtFileVersion>STABLE</txtFileVersion>
+    <fileDescription>Gestion de Inventarios para MIPYMES en Cuba</fileDescription>
+    <copyright>La Cumbre SURL</copyright>
+    <productVersion>1.0.6.2</productVersion>
+    <txtProductVersion>STABLE</txtProductVersion>
+    <productName>Auditor</productName>
+    <companyName>La Cumbre SURL</companyName>
+    <internalName>auditor</internalName>
+    <originalFilename>Auditor 1.0.6.2-STABLE.exe</originalFilename>
+    <trademarks>La Cumbre SURL</trademarks>
+    <language>CASTILIAN_SPANISH</language>
+  </versionInfo>
+  <messages>
+    <startupErr>Ocurrió un error iniciando la aplicación</startupErr>
+    <jreNotFoundErr>Esta aplicacion requiere el Entorno en Tiempo de Ejecución de Java (JRE - Java Runtime Environment).</jreNotFoundErr>
+    <jreVersionErr>Esta aplicacion requiere otra versión del Entorno en Tiempo de Ejecución de Java (JRE - Java Runtime Environment).</jreVersionErr>
+    <launcherErr>The registry refers to a nonexistent Java Runtime Environment installation or the runtime is corrupted.</launcherErr>
+    <instanceAlreadyExistsMsg>Ya se esta ejecutando otra instancia de esta aplicación.</instanceAlreadyExistsMsg>
+  </messages>
+</launch4jConfig>
