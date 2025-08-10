@@ -1,0 +1,15 @@
+{
+    "tasks": [
+        {
+            "type": "java (buildArtifact)",
+            "runOptions": {},
+            "label": "java (buildArtifact): auditor-desktop",
+            "mainClass": "cu.lacumbre.auditor.Auditor",
+            "targetPath": "${workspaceFolder}/${workspaceFolderBasename}.jar",
+            "elements": [
+                "${compileOutput}",
+                "${dependencies}"
+            ]
+        }
+    ]
+}

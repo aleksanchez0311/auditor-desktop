@@ -19,9 +19,10 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.WindowConstants;
 
 import com.toedter.calendar.JDateChooser;
-import cu.lacumbre.auditor.DaysController;
+
 import cu.lacumbre.auditor.EntitySelector;
 import cu.lacumbre.auditor.Setup;
+import cu.lacumbre.auditor.crud.DaysController;
 import cu.lacumbre.auditor.crud.ItemsCRUD;
 
 import cu.lacumbre.auditor.crud.OperationsCRUD;

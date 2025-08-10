@@ -1,7 +1,7 @@
 package cu.lacumbre.auditor.view.inventory;
 
-import cu.lacumbre.auditor.DaysController;
 import cu.lacumbre.auditor.EntitySelector;
+import cu.lacumbre.auditor.crud.DaysController;
 import cu.lacumbre.auditor.crud.ItemsCRUD;
 import java.awt.event.ActionEvent;
 import java.sql.SQLException;

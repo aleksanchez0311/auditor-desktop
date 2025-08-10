@@ -7,7 +7,7 @@ import cu.lacumbre.auditor.crud.EntitiesCRUD;
 import cu.lacumbre.auditor.crud.ItemsCRUD;
 import cu.lacumbre.auditor.view.custom.CustomComboBoxModel;
 import cu.lacumbre.auditor.view.utils.CustomComparator;
-import cu.lacumbre.auditor.view.utils.MatchingCategoriesException;
+import cu.lacumbre.auditor.exceptions.MatchingCategoriesException;
 import cu.lacumbre.utils.Logger;
 import cu.lacumbre.utils.Pair;
 import cu.lacumbre.utils.Settings;

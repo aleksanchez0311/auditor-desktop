@@ -1,4 +1,4 @@
-package cu.lacumbre.auditor.view.utils;
+package cu.lacumbre.auditor.exceptions;
 
 import cu.lacumbre.auditor.model.Item;
 import cu.lacumbre.auditor.model.Product;

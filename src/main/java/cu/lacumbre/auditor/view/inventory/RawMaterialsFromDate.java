@@ -1,6 +1,5 @@
 package cu.lacumbre.auditor.view.inventory;
 
-import cu.lacumbre.auditor.DaysController;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Dimension;
@@ -31,6 +30,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import cu.lacumbre.auditor.EntitySelector;
 import cu.lacumbre.auditor.Setup;
+import cu.lacumbre.auditor.crud.DaysController;
 import cu.lacumbre.auditor.crud.ItemsCRUD;
 import cu.lacumbre.auditor.crud.OperationsCRUD;
 import cu.lacumbre.auditor.model.Ingredient;

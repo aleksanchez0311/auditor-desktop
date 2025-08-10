@@ -1,5 +1,6 @@
 package cu.lacumbre.auditor;
 
+import cu.lacumbre.auditor.crud.DaysController;
 import cu.lacumbre.auditor.crud.EntitiesCRUD;
 import cu.lacumbre.auditor.crud.ItemsCRUD;
 import java.awt.BorderLayout;

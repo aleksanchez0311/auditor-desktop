@@ -5,6 +5,8 @@ import cu.lacumbre.auditor.Setup;
 import cu.lacumbre.auditor.crud.ItemsCRUD;
 import cu.lacumbre.auditor.crud.Mapper;
 import cu.lacumbre.auditor.crud.OperationsCRUD;
+import cu.lacumbre.auditor.exceptions.PriceChangedException;
+import cu.lacumbre.auditor.exceptions.UnmapedProductsException;
 import cu.lacumbre.auditor.model.Item;
 import cu.lacumbre.auditor.model.Product;
 import cu.lacumbre.auditor.view.inventory.MakeSale;

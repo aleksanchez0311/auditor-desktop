@@ -1,4 +1,4 @@
-package cu.lacumbre.auditor.view.utils;
+package cu.lacumbre.auditor.exceptions;
 
 import java.util.ArrayList;
 

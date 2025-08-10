@@ -1,6 +1,6 @@
-package cu.lacumbre.auditor;
+package cu.lacumbre.auditor.crud;
 
-import cu.lacumbre.auditor.crud.EntitiesCRUD;
+import cu.lacumbre.auditor.EntitySelector;
 import cu.lacumbre.auditor.model.Entity;
 import cu.lacumbre.utils.Logger;
 import cu.lacumbre.utils.Timing;
