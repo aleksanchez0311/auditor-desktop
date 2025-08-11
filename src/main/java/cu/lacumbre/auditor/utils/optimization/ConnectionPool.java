@@ -1,11 +1,13 @@
 package cu.lacumbre.auditor.utils.optimization;
 
-import com.mchange.v2.c3p0.ComboPooledDataSource;
+import java.io.File;
+import java.io.FileInputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Properties;
-import java.io.FileInputStream;
-import java.io.File;
+
+import com.mchange.v2.c3p0.ComboPooledDataSource;
+
 import cu.lacumbre.utils.InputStreamToTempFile;
 import cu.lacumbre.utils.Logger;
 

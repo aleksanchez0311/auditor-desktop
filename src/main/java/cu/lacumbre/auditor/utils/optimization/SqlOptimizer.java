@@ -2,6 +2,7 @@ package cu.lacumbre.auditor.utils.optimization;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+
 import cu.lacumbre.utils.Logger;
 
 public class SqlOptimizer {

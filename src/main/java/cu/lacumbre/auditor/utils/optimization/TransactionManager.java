@@ -2,6 +2,9 @@ package cu.lacumbre.auditor.utils.optimization;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+
+import org.apache.poi.ss.formula.functions.T;
+
 import cu.lacumbre.utils.Logger;
 
 public class TransactionManager {

@@ -2,6 +2,8 @@ package cu.lacumbre.auditor.utils.optimization;
 
 import java.util.List;
 
+import org.apache.poi.ss.formula.functions.T;
+
 public class PaginatedResult<T> {
     private final List<T> items;
     private final int totalItems;

@@ -1,16 +1,20 @@
 package cu.lacumbre.auditor.crud;
 
-import cu.lacumbre.auditor.utils.optimization.CacheManager;
-import cu.lacumbre.auditor.utils.optimization.ConnectionPool;
-import cu.lacumbre.auditor.utils.optimization.PerformanceMonitor;
-import cu.lacumbre.auditor.utils.optimization.PreparedStatementCache;
-import cu.lacumbre.auditor.utils.optimization.TransactionManager;
-import cu.lacumbre.utils.Logger;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
+
+import org.apache.poi.ss.formula.functions.T;
+
+import cu.lacumbre.auditor.utils.optimization.CacheManager;
+import cu.lacumbre.auditor.utils.optimization.ConnectionPool;
+import cu.lacumbre.auditor.utils.optimization.PerformanceMonitor;
+import cu.lacumbre.auditor.utils.optimization.PreparedStatementCache;
+import cu.lacumbre.auditor.utils.optimization.TransactionCallback;
+import cu.lacumbre.auditor.utils.optimization.TransactionManager;
+import cu.lacumbre.utils.Logger;
 
 public abstract class OptimizedCrudBase<T> {
     protected static final long CACHE_TTL = 300000; // 5 minutos
