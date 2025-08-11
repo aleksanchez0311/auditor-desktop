@@ -116,8 +116,22 @@ public class DashBoard extends JFrame {
             this.daysController = new DaysController(connection, entitiesCRUD);
             ModernThemeManager.setupModernTheme();
 
-            // Panel lateral moderno
+            // Inicializar los componentes modernos
             modernSidePanel = new ModernSidePanel();
+            modernContentPanel = new ModernContentPanel();
+
+            // Configurar el layout principal
+            getContentPane().setLayout(new BorderLayout());
+            
+            // Agregar los componentes principales
+            getContentPane().add(modernSidePanel, BorderLayout.WEST);
+            getContentPane().add(modernContentPanel, BorderLayout.CENTER);
+            
+            // Configurar el panel de contenido moderno
+            modernContentPanel.setTitle("Auditor Desktop");
+            
+            // Configurar los menús del panel lateral
+            setupModernMenus();
 
             // Panel de contenido moderno con dashboard
             dashboardView = new DashboardView();
@@ -139,7 +153,7 @@ public class DashBoard extends JFrame {
             contentPane.add(modernContentPanel, BorderLayout.CENTER);
 
             // Configurar menú lateral
-            setupSideMenu();
+            // setupSideMenu(); // Reemplazado por setupModernMenus()
 
             // Agregar acciones rápidas al panel de contenido
             setupQuickActions();
@@ -180,6 +194,34 @@ public class DashBoard extends JFrame {
         this.customComparator = customComparator;
     }
 
+    private void setupModernMenus() {
+        // Agregar elementos al menú moderno
+        JButton btnMerchandise = modernSidePanel.addMenuItem("Mercancía", "/icons/inventory.svg");
+        btnMerchandise.addActionListener(e -> {
+            miMeasureUnitsActionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, ""));
+        });
+
+        JButton btnInventory = modernSidePanel.addMenuItem("Inventario", "/icons/inventory.svg");
+        btnInventory.addActionListener(e -> {
+            miInventorySumaryActionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, ""));
+        });
+
+        JButton btnWorkers = modernSidePanel.addMenuItem("Trabajadores", "/icons/workers.svg");
+        btnWorkers.addActionListener(e -> {
+            miStaffActionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, ""));
+        });
+
+        JButton btnSales = modernSidePanel.addMenuItem("Ventas", "/icons/sales.svg");
+        btnSales.addActionListener(e -> {
+            miSaleActionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, ""));
+        });
+
+        JButton btnReports = modernSidePanel.addMenuItem("Reportes", "/icons/sales.svg");
+        btnReports.addActionListener(e -> {
+            miPeriodSaleViewActionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, ""));
+        });
+    }
+
     @Override
     public void dispose() {
         saveProperties(Setup.options);
@@ -215,7 +257,7 @@ public class DashBoard extends JFrame {
         contentPane.add(modernContentPanel, BorderLayout.CENTER);
         
         // Configurar menú lateral
-        setupSideMenu();
+        // setupSideMenu(); // Reemplazado por setupModernMenus()
         
         // Agregar acciones rápidas al panel de contenido
         setupQuickActions();
@@ -1292,59 +1334,6 @@ public class DashBoard extends JFrame {
     private JPanel panelSession;
     private JPanel sideMenu;
     // End of variables declaration//GEN-END:variables
-
-    private void setupSideMenu() {
-        // Operaciones
-        modernSidePanel.addMenuItem("Ventas", "/icons/sale.svg").addActionListener(e -> {
-            SaleOperGestion dialog = new SaleOperGestion(this, false, operationsCRUD, itemsCRUD, false);
-            showDialog(dialog);
-        });
-
-        modernSidePanel.addMenuItem("Materias Primas", "/icons/raw-material.svg").addActionListener(e -> {
-            RawMaterialsGestion dialog = new RawMaterialsGestion(this, false, operationsCRUD, itemsCRUD);
-            showDialog(dialog);
-        });
-
-        modernSidePanel.addMenuItem("Inventario", "/icons/inventory.svg").addActionListener(e -> {
-            Inventory dialog = new Inventory(this, operationsCRUD, false);
-            showDialog(dialog);
-        });
-
-        modernSidePanel.addMenuItem("Personal", "/icons/staff.svg").addActionListener(e -> {
-            StaffGestion dialog = new StaffGestion(this, workersCRUD, false);
-            showDialog(dialog);
-        });
-
-        // Separador
-        modernSidePanel.add(Box.createVerticalStrut(20));
-
-        // Gestión
-        modernSidePanel.addMenuItem("Gastos", "/icons/expenses.svg").addActionListener(e -> {
-            ExpensesGestion dialog = new ExpensesGestion(this, itemsCRUD, false);
-            showDialog(dialog);
-        });
-
-        modernSidePanel.addMenuItem("Documentos", "/icons/documents.svg").addActionListener(e -> {
-            try {
-                DocumentsGestion dialog = new DocumentsGestion(this, false, connection, workersCRUD);
-                showDialog(dialog);
-            } catch (SQLException ex) {
-                Logger.getInstance().updateErrorLog(ex);
-            }
-        });
-
-        // Separador
-        modernSidePanel.add(Box.createVerticalStrut(20));
-
-        // Configuración
-        modernSidePanel.addMenuItem("Configuración", "/icons/settings.svg").addActionListener(e -> {
-            // Implementar diálogo de configuración
-        });
-
-        // Botón de cambio de entidad en la parte inferior
-        JButton changeEntityBtn = modernSidePanel.addMenuItem("Cambiar Entidad", "/icons/switch.svg");
-        changeEntityBtn.addActionListener(e -> btnCloseEntityActionPerformed(e));
-    }
 
     private void setupQuickActions() {
         modernContentPanel.addQuickAction("Generar Cuadre", () -> {
