@@ -28,6 +28,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import cu.lacumbre.auditor.Setup;
 import cu.lacumbre.auditor.crud.ItemsCRUD;
 import cu.lacumbre.auditor.crud.OperationsCRUD;
+import cu.lacumbre.auditor.model.Item;
 import cu.lacumbre.auditor.model.RawMaterial;
 import cu.lacumbre.auditor.view.custom.CustomJTable;
 import cu.lacumbre.auditor.view.custom.CustomTM_RMReport;
@@ -141,7 +142,7 @@ public class DialogReportsRawMaterials extends JDialog{
     }//GEN-LAST:event_btnExportActionPerformed
 
     private void updateView() {
-        ArrayList<RawMaterial> rawMaterials = getList();
+        ArrayList<RawMaterial> rawMaterials = (ArrayList<RawMaterial>) getList();
         CustomTM_RMReport tableModel = new CustomTM_RMReport(rawMaterials);
         tableRawMaterials.setModel(tableModel);
     }
@@ -156,7 +157,7 @@ public class DialogReportsRawMaterials extends JDialog{
     // End of variables declaration//GEN-END:variables
  
     
-    public ArrayList getList() {
+    public ArrayList<? extends Item> getList() {
         return itemsCRUD.getList(Setup.CATEGORIA_MATERIA_PRIMA, true);
     }
 }

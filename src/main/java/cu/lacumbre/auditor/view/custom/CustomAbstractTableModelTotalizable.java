@@ -47,7 +47,7 @@ public abstract class CustomAbstractTableModelTotalizable extends CustomAbstract
             }
             totals[totalColumnIndexValue] = total;
         }
-        ArrayList subList = new ArrayList();
+        ArrayList<Object> subList = new ArrayList<>();
         for (int i = 0; i < length; i++) {
             subList.add(null);
         }

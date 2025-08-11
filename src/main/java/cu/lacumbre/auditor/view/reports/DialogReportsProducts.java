@@ -29,6 +29,7 @@ import cu.lacumbre.auditor.EntitySelector;
 import cu.lacumbre.auditor.Setup;
 import cu.lacumbre.auditor.crud.ItemsCRUD;
 import cu.lacumbre.auditor.crud.OperationsCRUD;
+import cu.lacumbre.auditor.model.Item;
 import cu.lacumbre.auditor.model.Product;
 import cu.lacumbre.auditor.view.custom.CustomJTable;
 import cu.lacumbre.auditor.view.custom.CustomTM_PReport;
@@ -143,7 +144,7 @@ public class DialogReportsProducts extends JDialog{
     }//GEN-LAST:event_btnExportActionPerformed
 
     private void updateView() {
-        ArrayList<Product> products = getList();
+        ArrayList<Product> products = (ArrayList<Product>) getList();
         CustomTM_PReport tableModel = new CustomTM_PReport(products);
         tableProducts.setModel(tableModel);
     }
@@ -157,7 +158,7 @@ public class DialogReportsProducts extends JDialog{
     private CustomJTable tableProducts;
     // End of variables declaration//GEN-END:variables
 
-    public ArrayList getList() {
+    public ArrayList<? extends Item> getList() {
         return itemsCRUD.getList(Setup.CATEGORIA_PRODUCTO, true);
     }
     

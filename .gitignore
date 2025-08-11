@@ -1,5 +1,7 @@
 /nbproject/
 /target/
+/auditor-web/target/
+/auditor-web-frontend/node_modules/
 /.vscode/
 /src/test/java/
 nbactions.xml
