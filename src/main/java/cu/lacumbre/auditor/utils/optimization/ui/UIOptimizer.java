@@ -14,7 +14,13 @@ import com.lowagie.text.Image;
 
 import cu.lacumbre.auditor.utils.optimization.OptimizedTableCellRenderer;
 import cu.lacumbre.auditor.utils.optimization.TableOptimizer;
-import net.sf.jasperreports.engine.component.Component;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.Component;
+import java.awt.Graphics2D;
+import java.awt.GraphicsConfiguration;
+import java.awt.GraphicsEnvironment;
+import java.awt.image.BufferedImage;
 
 public class UIOptimizer {
     private static final ExecutorService backgroundExecutor = Executors.newFixedThreadPool(2);
@@ -81,8 +87,7 @@ public class UIOptimizer {
     }
 
     public static void optimizeImage(Image image) {
-        if (image instanceof BufferedImage) {
-            BufferedImage buffered = (BufferedImage) image;
+        if (image instanceof BufferedImage buffered) {
             // Convertir a un formato más eficiente para el renderizado
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             GraphicsConfiguration gc = ge.getDefaultScreenDevice().getDefaultConfiguration();
