@@ -1,31 +1,5 @@
 package cu.lacumbre.auditor;
 
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.time.LocalDate;
-import java.util.Properties;
-import java.util.logging.Level;
-
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.GroupLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
-import javax.swing.JSeparator;
-import javax.swing.KeyStroke;
-import javax.swing.SwingConstants;
-import javax.swing.WindowConstants;
-
 import cu.lacumbre.auditor.crud.DaysController;
 import cu.lacumbre.auditor.crud.EntitiesCRUD;
 import cu.lacumbre.auditor.crud.ItemsCRUD;
@@ -82,6 +56,28 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowFocusListener;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.Properties;
+import javax.swing.BoxLayout;
+import javax.swing.GroupLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
+import javax.swing.JSeparator;
+import javax.swing.KeyStroke;
+import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
 
 public class DashBoard extends JFrame {
 
@@ -122,14 +118,14 @@ public class DashBoard extends JFrame {
 
             // Configurar el layout principal
             getContentPane().setLayout(new BorderLayout());
-            
+
             // Agregar los componentes principales
             getContentPane().add(modernSidePanel, BorderLayout.WEST);
             getContentPane().add(modernContentPanel, BorderLayout.CENTER);
-            
+
             // Configurar el panel de contenido moderno
             modernContentPanel.setTitle("Auditor Desktop");
-            
+
             // Configurar los menús del panel lateral
             setupModernMenus();
 
@@ -154,7 +150,6 @@ public class DashBoard extends JFrame {
 
             // Configurar menú lateral
             // setupSideMenu(); // Reemplazado por setupModernMenus()
-
             // Agregar acciones rápidas al panel de contenido
             setupQuickActions();
 
@@ -196,29 +191,34 @@ public class DashBoard extends JFrame {
 
     private void setupModernMenus() {
         // Agregar elementos al menú moderno
-        JButton btnMerchandise = modernSidePanel.addMenuItem("Mercancía", "/icons/inventory.svg");
+        JButton btnMerchandise = modernSidePanel.addMenuItem("Mercancía", "icons/merchandise.png");
         btnMerchandise.addActionListener(e -> {
             miMeasureUnitsActionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, ""));
         });
 
-        JButton btnInventory = modernSidePanel.addMenuItem("Inventario", "/icons/inventory.svg");
+        JButton btnInventory = modernSidePanel.addMenuItem("Inventario", "icons/inventory.png");
         btnInventory.addActionListener(e -> {
             miInventorySumaryActionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, ""));
         });
 
-        JButton btnWorkers = modernSidePanel.addMenuItem("Trabajadores", "/icons/workers.svg");
+        JButton btnWorkers = modernSidePanel.addMenuItem("Trabajadores", "icons/workers.png");
         btnWorkers.addActionListener(e -> {
             miStaffActionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, ""));
         });
 
-        JButton btnSales = modernSidePanel.addMenuItem("Ventas", "/icons/sales.svg");
+        JButton btnSales = modernSidePanel.addMenuItem("Ventas", "icons/sales.png");
         btnSales.addActionListener(e -> {
             miSaleActionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, ""));
         });
 
-        JButton btnReports = modernSidePanel.addMenuItem("Reportes", "/icons/sales.svg");
+        JButton btnReports = modernSidePanel.addMenuItem("Reportes", "icons/reports.png");
         btnReports.addActionListener(e -> {
             miPeriodSaleViewActionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, ""));
+        });
+
+        JButton btnSettings = modernSidePanel.addMenuItem("Configuración", "icons/settings.png");
+        btnSettings.addActionListener(e -> {
+            miSettingsActionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, ""));
         });
     }
 
@@ -231,40 +231,29 @@ public class DashBoard extends JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        // Inicializar el tema moderno
-        ModernThemeManager.setupModernTheme();
-        
-        // Panel lateral moderno
-        modernSidePanel = new ModernSidePanel();
-        
-        // Panel de contenido moderno con dashboard
-        dashboardView = new DashboardView();
-        modernContentPanel = new ModernContentPanel();
-        modernContentPanel.setTitle("Bienvenido a Auditor");
-        modernContentPanel.setContent(dashboardView);
-        
-        // Configuración básica de la ventana
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Auditor para " + Setup.enterpriseName + " en " + EntitySelector.currentEntity.getDescription());
-        setMinimumSize(new Dimension(1200, 700));
-        
-        // Crear estructura principal
-        Container contentPane = getContentPane();
-        contentPane.setLayout(new BorderLayout());
-        
-        // Agregar paneles principales
-        contentPane.add(modernSidePanel, BorderLayout.WEST);
-        contentPane.add(modernContentPanel, BorderLayout.CENTER);
-        
-        // Configurar menú lateral
-        // setupSideMenu(); // Reemplazado por setupModernMenus()
-        
-        // Agregar acciones rápidas al panel de contenido
-        setupQuickActions();
-        
-        // Configurar estado inicial
-        pack();
-        setLocationRelativeTo(null);
+
+        sideMenu = new JPanel();
+        panelMenu = new JPanel();
+        jPanel12 = new JPanel();
+        jPanel11 = new JPanel();
+        jPanel10 = new JPanel();
+        jPanel9 = new JPanel();
+        panelOptions = new JPanel();
+        jPanel1 = new JPanel();
+        jPanel3 = new JPanel();
+        jPanel4 = new JPanel();
+        jButton5 = new JButton();
+        jPanel5 = new JPanel();
+        jPanel6 = new JPanel();
+        jPanel7 = new JPanel();
+        panelSession = new JPanel();
+        jButton6 = new JButton();
+        jButton7 = new JButton();
+        jPanel8 = new JPanel();
+        jButton8 = new JButton();
+        btnCloseEntity = new JButton();
+        mainPanelSeprator = new JSeparator();
+        mainContent = new JPanel();
         mainNorth = new JPanel();
         jSeparator8 = new JSeparator();
         jPanel2 = new JPanel();
@@ -340,6 +329,7 @@ public class DashBoard extends JFrame {
             }
         });
 
+        sideMenu = new JPanel();
         sideMenu.setMinimumSize(new Dimension(300, 475));
         sideMenu.setPreferredSize(new Dimension(299, 500));
         sideMenu.setLayout(new BorderLayout());
@@ -1091,7 +1081,7 @@ public class DashBoard extends JFrame {
                 JOptionPane.showMessageDialog(this, "Jornada Completada", "Info", JOptionPane.INFORMATION_MESSAGE);
             }
         } catch (SQLException ex) {
-            java.util.logging.Logger.getLogger(DashBoard.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getInstance().updateErrorLog(ex);
         }
     }//GEN-LAST:event_miMoveToNextDayActionPerformed
 
@@ -1104,7 +1094,7 @@ public class DashBoard extends JFrame {
                 JOptionPane.showMessageDialog(this, "Jornada Reiniciada", "Info", JOptionPane.INFORMATION_MESSAGE);
             }
         } catch (SQLException ex) {
-            java.util.logging.Logger.getLogger(DashBoard.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getInstance().updateErrorLog(ex);
         }
     }//GEN-LAST:event_miResetDayActionPerformed
 
@@ -1124,7 +1114,7 @@ public class DashBoard extends JFrame {
                 JOptionPane.showMessageDialog(this, "Jornada retocedida", "Info", JOptionPane.INFORMATION_MESSAGE);
             }
         } catch (SQLException ex) {
-            java.util.logging.Logger.getLogger(DashBoard.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getInstance().updateErrorLog(ex);
         }
     }//GEN-LAST:event_miMoveToPreviousDayActionPerformed
 

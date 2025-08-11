@@ -1,13 +1,5 @@
 package cu.lacumbre.auditor.utils.ui;
 
-import java.awt.BorderLayout;
-import java.awt.CardLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Image;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -18,6 +10,15 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
+
+import java.awt.BorderLayout;
+import java.awt.CardLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Image;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class ModernSidePanel extends JPanel {
     private final Color HOVER_COLOR = new Color(240, 240, 240);
@@ -80,9 +81,19 @@ public class ModernSidePanel extends JPanel {
         menuButton.setMaximumSize(new Dimension(Integer.MAX_VALUE, BUTTON_HEIGHT));
         
         if (iconPath != null) {
-            ImageIcon icon = new ImageIcon(getClass().getResource(iconPath));
-            Image img = icon.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
-            menuButton.setIcon(new ImageIcon(img));
+            try {
+                java.net.URL imageURL = getClass().getClassLoader().getResource(iconPath.substring(1));
+                if (imageURL != null) {
+                    ImageIcon icon = new ImageIcon(imageURL);
+                    Image img = icon.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+                    menuButton.setIcon(new ImageIcon(img));
+                } else {
+                    System.err.println("No se pudo encontrar el icono: " + iconPath);
+                }
+            } catch (Exception e) {
+                System.err.println("Error al cargar el icono " + iconPath + ": " + e.getMessage());
+                e.printStackTrace();
+            }
         }
         
         // Efectos hover
