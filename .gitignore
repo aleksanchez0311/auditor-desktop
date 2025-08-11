@@ -1,8 +1,8 @@
+/.settings/
+/.vscode/
 /nbproject/
 /target/
-/auditor-web/target/
-/auditor-web-frontend/node_modules/
-/.vscode/
 /src/test/java/
+nb-configuration.xml
 nbactions.xml
-/bin/
+salva 09-08-25

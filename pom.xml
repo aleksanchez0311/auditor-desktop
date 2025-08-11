@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <name>La Cumbre Auditor</name>
+    <name>auditor-desktop</name>
     <groupId>cu.lacumbre</groupId>
-    <artifactId>auditor</artifactId>
+    <artifactId>auditor-desktop</artifactId>
     <version>1.0.6.2-STABLE</version>
     <packaging>jar</packaging>
     <build>
@@ -120,4 +120,5 @@
         <lcutils.version>1.0.0.0-STABLE</lcutils.version>
         <apache.poi.version>5.2.2</apache.poi.version>
     </properties>
+    <description>Auditor es un sistema de gestión empresarial para PC para MIPYMES</description>
 </project>
