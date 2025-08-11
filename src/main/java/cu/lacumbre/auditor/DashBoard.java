@@ -75,7 +75,6 @@ import cu.lacumbre.auditor.view.workers.StaffGestion;
 import cu.lacumbre.utils.Logger;
 import cu.lacumbre.utils.Settings;
 import java.sql.Connection;
-import net.miginfocom.swing.MigLayout;
 
 public class DashBoard extends JFrame {
 
