@@ -1,21 +1,10 @@
 package cu.lacumbre.auditor.view.utils;
 
-import static cu.lacumbre.auditor.Setup.DEFAULT_BORDER;
-import static cu.lacumbre.auditor.Setup.DEFAULT_FONT_BOLD;
-import cu.lacumbre.auditor.crud.ItemsCRUD;
-import cu.lacumbre.auditor.model.Item;
-import cu.lacumbre.auditor.model.Product;
-import java.awt.CardLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.GridLayout;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Map;
 import java.util.TreeMap;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -25,6 +14,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.TitledBorder;
+
+import cu.lacumbre.auditor.crud.ItemsCRUD;
+import cu.lacumbre.auditor.model.Item;
+import cu.lacumbre.auditor.model.Product;
+import net.sf.jasperreports.engine.component.Component;
 
 public class Checker extends JDialog implements ItemListener {
 
@@ -65,19 +59,33 @@ public class Checker extends JDialog implements ItemListener {
     public JScrollPane getPanel(JPanel parent) {
         double totalItems = list.size();
         int neededRows = getNeededRows(totalItems, wantedCols);
+        
         if (!list.isEmpty()) {
             create(wantedCols, neededRows);
             fill(totalItems, neededRows);
             totalSubPanels = refill(totalItems, neededRows);
-            parent.setPreferredSize(adjust(wantedCols, neededRows));
         } else {
             create();
             fill();
             totalSubPanels = 1;
-            parent.setPreferredSize(adjust(2, 6));
         }
-        JScrollPane scroll = new JScrollPane();
-        scroll.setViewportView(panel);
+        
+        // Configuramos el scrollPane para ser responsivo
+        JScrollPane scroll = new JScrollPane(panel);
+        scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        
+        // Establecemos un tamaño mínimo para el parent
+        Dimension minSize = new Dimension(300, 200);
+        parent.setMinimumSize(minSize);
+        
+        // Ajustamos el tamaño preferido basado en el contenido
+        Dimension preferredSize = adjust(wantedCols, neededRows);
+        parent.setPreferredSize(preferredSize);
+        
+        // Permitimos que el parent crezca
+        parent.setMaximumSize(new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE));
+        
         return scroll;
     }
 
@@ -92,14 +100,15 @@ public class Checker extends JDialog implements ItemListener {
         panel = new JPanel();
         buttonGroup = new ButtonGroup();
         panel.setBorder(border);
-        panel.setLayout(new GridLayout(neededRows, (int) wantedCols, 5, 5));
+        GridLayout layout = new GridLayout(0, (int) wantedCols, 5, 5);
+        panel.setLayout(layout);
         return panel;
     }
 
     private JPanel create() {
         panel = new JPanel();
         panel.setBorder(border);
-        panel.setLayout(new CardLayout(10, 10));
+        panel.setLayout(new BorderLayout());
         return panel;
     }
 
@@ -172,10 +181,26 @@ public class Checker extends JDialog implements ItemListener {
     }
 
     protected Dimension adjust(double wantedCols, int neededRows) {
-        int width = (int) ((wantedCols * innerPanelPreferredSize.width) + (wantedCols * 5));
-        int height = (int) ((neededRows * innerPanelPreferredSize.height) + (neededRows * 5));
+        // Calculamos tamaños base
+        int baseWidth = (int) (wantedCols * innerPanelPreferredSize.width);
+        int baseHeight = (int) (neededRows * innerPanelPreferredSize.height);
+        
+        // Añadimos espacio para márgenes y gaps
+        int width = baseWidth + (int)(wantedCols * 5);
+        int height = baseHeight + (int)(neededRows * 5);
+        
+        // Establecemos tamaños mínimos razonables
+        int minWidth = Math.max(300, width / 3);
+        int minHeight = Math.max(200, height / 3);
+        
+        panel.setMinimumSize(new Dimension(minWidth, minHeight));
+        
+        // El tamaño preferido es más flexible
         panel.setPreferredSize(new Dimension(width, height));
-        panel.setMinimumSize(new Dimension(width / 2, height / 2));
+        
+        // Permitimos que crezca sin límite
+        panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE));
+        
         return new Dimension(width + 20, height + 20);
     }
 
