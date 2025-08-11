@@ -1,5 +1,6 @@
 package cu.lacumbre.auditor.view.utils;
 
+import static cu.lacumbre.auditor.Setup.DEFAULT_FONT;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -17,7 +18,11 @@ import cu.lacumbre.auditor.model.Ingredient;
 import cu.lacumbre.auditor.model.Product;
 import cu.lacumbre.auditor.model.Workable;
 import cu.lacumbre.auditor.view.inventory.MakeSale;
-import net.sf.jasperreports.engine.component.Component;
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.event.ItemEvent;
 
 public class CheckerAmmounts extends Checker implements ChangeListener {
 
@@ -30,49 +35,25 @@ public class CheckerAmmounts extends Checker implements ChangeListener {
         super.fill(totalElements, neededRows);
         double maxWidth = 0.0d;
         double maxHeight = 0.0d;
-        
         for (Object object : panel.getComponents()) {
             JPanel innerPanel = (JPanel) object;
-            
-            // Configuramos el layout del panel interno para ser responsivo
-            innerPanel.setLayout(new BorderLayout(5, 0));
-            
             JCheckBox check = (JCheckBox) innerPanel.getComponents()[0];
             check.setEnabled(true);
             buttonGroup.remove(check);
-            
-            // Creamos un panel para el spinner con FlowLayout
-            JPanel spinnerPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 5, 0));
-            
-            // Configuramos el spinner
             JSpinner ammount = new JSpinner(new SpinnerNumberModel(0.0d, 0.0d, null, 1.0d));
             ammount.setFont(DEFAULT_FONT);
             ammount.setEnabled(false);
-            
-            // Establecemos un tamaño preferido para el spinner
-            Dimension spinnerSize = new Dimension(80, 25);
-            ammount.setPreferredSize(spinnerSize);
-            
-            spinnerPanel.add(ammount);
-            
-            // Agregamos los componentes al panel interno usando BorderLayout
-            innerPanel.remove(check);
-            innerPanel.add(check, BorderLayout.CENTER);
-            innerPanel.add(spinnerPanel, BorderLayout.EAST);
-            
-            // Actualizamos dimensiones máximas
-            Dimension size = innerPanel.getPreferredSize();
-            maxWidth = Math.max(maxWidth, size.getWidth());
-            maxHeight = Math.max(maxHeight, size.getHeight());
-            
+            innerPanel.add(ammount);
             innerPanel.revalidate();
             innerPanel.repaint();
+            if (innerPanel.getPreferredSize().getWidth() > maxWidth) {
+                maxWidth = innerPanel.getPreferredSize().getWidth();
+            }
+            if (innerPanel.getPreferredSize().getHeight() > maxHeight) {
+                maxHeight = innerPanel.getPreferredSize().getHeight();
+            }
         }
-        
-        // Ajustamos el tamaño del panel interno considerando el espacio extra necesario
-        innerPanelPreferredSize = new Dimension((int) Math.max(innerPanelPreferredSize.getWidth(), maxWidth),
-                                              (int) (maxHeight * 1.2));
-        
+        innerPanelPreferredSize = new Dimension((int) innerPanelPreferredSize.getWidth(), (int) (maxHeight * 1.4));
         enableChecks();
         panel.revalidate();
         panel.repaint();

@@ -1,5 +1,7 @@
 package cu.lacumbre.auditor.view.utils;
 
+import static cu.lacumbre.auditor.Setup.DEFAULT_BORDER;
+import static cu.lacumbre.auditor.Setup.DEFAULT_FONT_BOLD;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Map;
@@ -18,7 +20,12 @@ import javax.swing.border.TitledBorder;
 import cu.lacumbre.auditor.crud.ItemsCRUD;
 import cu.lacumbre.auditor.model.Item;
 import cu.lacumbre.auditor.model.Product;
-import net.sf.jasperreports.engine.component.Component;
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 public class Checker extends JDialog implements ItemListener {
 
