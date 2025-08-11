@@ -23,7 +23,7 @@ public class ConnectionPool {
         }
     }
     
-    private static void initialize() throws Exception {
+    public static void initialize() throws Exception {
         properties = getProperties();
         cpds = new ComboPooledDataSource();
         cpds.setJdbcUrl((String) properties.get("DB_URL"));

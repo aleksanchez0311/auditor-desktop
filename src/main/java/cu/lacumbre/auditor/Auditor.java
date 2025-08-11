@@ -16,6 +16,7 @@ import cu.lacumbre.auditor.utils.optimization.PreparedStatementCache;
 import cu.lacumbre.auditor.utils.optimization.SqlOptimizer;
 import cu.lacumbre.utils.Logger;
 import cu.lacumbre.utils.Settings;
+import java.awt.EventQueue;
 
 public class Auditor {
 

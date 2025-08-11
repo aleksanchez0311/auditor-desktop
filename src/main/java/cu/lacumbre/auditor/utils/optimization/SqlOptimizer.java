@@ -16,7 +16,7 @@ public class SqlOptimizer {
             
             // Índices para la tabla items
             createIndexIfNotExists(conn, "idx_items_entity", "items", "entity");
-            createIndexIfNotExists(conn, "idx_items_type", "items", "type");
+            createIndexIfNotExists(conn, "idx_items_id", "items", "id");
             
             // Índices para otras tablas frecuentemente consultadas
             createIndexIfNotExists(conn, "idx_workers_entity", "workers", "entity");

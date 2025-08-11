@@ -3,7 +3,7 @@ package cu.lacumbre.auditor.utils.optimization;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
-import net.sf.jasperreports.engine.component.Component;
+import java.awt.Component;
 
 public class OptimizedTableCellRenderer extends DefaultTableCellRenderer {
     
