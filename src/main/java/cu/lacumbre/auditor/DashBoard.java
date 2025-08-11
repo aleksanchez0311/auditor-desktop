@@ -84,6 +84,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowFocusListener;
 
 public class DashBoard extends JFrame {
+
     private ModernSidePanel modernSidePanel;
     private ModernContentPanel modernContentPanel;
     private DashboardView dashboardView;
@@ -113,6 +114,37 @@ public class DashBoard extends JFrame {
             this.itemsCRUD = new ItemsCRUD<>(connection, EntitySelector.currentEntity, customComparator);
             this.operationsCRUD = new OperationsCRUD(connection, EntitySelector.currentEntity, itemsCRUD);
             this.daysController = new DaysController(connection, entitiesCRUD);
+            ModernThemeManager.setupModernTheme();
+
+            // Panel lateral moderno
+            modernSidePanel = new ModernSidePanel();
+
+            // Panel de contenido moderno con dashboard
+            dashboardView = new DashboardView();
+            modernContentPanel = new ModernContentPanel();
+            modernContentPanel.setTitle("Bienvenido a Auditor");
+            modernContentPanel.setContent(dashboardView);
+
+            // Configuración básica de la ventana
+            setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+            setTitle("Auditor para " + Setup.enterpriseName + " en " + EntitySelector.currentEntity.getDescription());
+            setMinimumSize(new Dimension(1200, 700));
+
+            // Crear estructura principal
+            Container contentPane = getContentPane();
+            contentPane.setLayout(new BorderLayout());
+
+            // Agregar paneles principales
+            contentPane.add(modernSidePanel, BorderLayout.WEST);
+            contentPane.add(modernContentPanel, BorderLayout.CENTER);
+
+            // Configurar menú lateral
+            setupSideMenu();
+
+            // Agregar acciones rápidas al panel de contenido
+            setupQuickActions();
+
+            // Configurar estado inicial
             initComponents();
             setSize(width, height);
             setExtendedState(extendedState);
@@ -1260,39 +1292,39 @@ public class DashBoard extends JFrame {
     private JPanel panelSession;
     private JPanel sideMenu;
     // End of variables declaration//GEN-END:variables
-    
+
     private void setupSideMenu() {
         // Operaciones
-        modernSidePanel.addMenuItem("Ventas", "/icons/sale.png").addActionListener(e -> {
+        modernSidePanel.addMenuItem("Ventas", "/icons/sale.svg").addActionListener(e -> {
             SaleOperGestion dialog = new SaleOperGestion(this, false, operationsCRUD, itemsCRUD, false);
             showDialog(dialog);
         });
-        
-        modernSidePanel.addMenuItem("Materias Primas", "/icons/raw-material.png").addActionListener(e -> {
+
+        modernSidePanel.addMenuItem("Materias Primas", "/icons/raw-material.svg").addActionListener(e -> {
             RawMaterialsGestion dialog = new RawMaterialsGestion(this, false, operationsCRUD, itemsCRUD);
             showDialog(dialog);
         });
-        
-        modernSidePanel.addMenuItem("Inventario", "/icons/inventory.png").addActionListener(e -> {
+
+        modernSidePanel.addMenuItem("Inventario", "/icons/inventory.svg").addActionListener(e -> {
             Inventory dialog = new Inventory(this, operationsCRUD, false);
             showDialog(dialog);
         });
-        
-        modernSidePanel.addMenuItem("Personal", "/icons/staff.png").addActionListener(e -> {
+
+        modernSidePanel.addMenuItem("Personal", "/icons/staff.svg").addActionListener(e -> {
             StaffGestion dialog = new StaffGestion(this, workersCRUD, false);
             showDialog(dialog);
         });
-        
+
         // Separador
         modernSidePanel.add(Box.createVerticalStrut(20));
-        
+
         // Gestión
-        modernSidePanel.addMenuItem("Gastos", "/icons/expenses.png").addActionListener(e -> {
+        modernSidePanel.addMenuItem("Gastos", "/icons/expenses.svg").addActionListener(e -> {
             ExpensesGestion dialog = new ExpensesGestion(this, itemsCRUD, false);
             showDialog(dialog);
         });
-        
-        modernSidePanel.addMenuItem("Documentos", "/icons/documents.png").addActionListener(e -> {
+
+        modernSidePanel.addMenuItem("Documentos", "/icons/documents.svg").addActionListener(e -> {
             try {
                 DocumentsGestion dialog = new DocumentsGestion(this, false, connection, workersCRUD);
                 showDialog(dialog);
@@ -1300,20 +1332,20 @@ public class DashBoard extends JFrame {
                 Logger.getInstance().updateErrorLog(ex);
             }
         });
-        
+
         // Separador
         modernSidePanel.add(Box.createVerticalStrut(20));
-        
+
         // Configuración
-        modernSidePanel.addMenuItem("Configuración", "/icons/settings.png").addActionListener(e -> {
+        modernSidePanel.addMenuItem("Configuración", "/icons/settings.svg").addActionListener(e -> {
             // Implementar diálogo de configuración
         });
-        
+
         // Botón de cambio de entidad en la parte inferior
-        JButton changeEntityBtn = modernSidePanel.addMenuItem("Cambiar Entidad", "/icons/switch.png");
+        JButton changeEntityBtn = modernSidePanel.addMenuItem("Cambiar Entidad", "/icons/switch.svg");
         changeEntityBtn.addActionListener(e -> btnCloseEntityActionPerformed(e));
     }
-    
+
     private void setupQuickActions() {
         modernContentPanel.addQuickAction("Generar Cuadre", () -> {
             try {
@@ -1322,7 +1354,7 @@ public class DashBoard extends JFrame {
                 Logger.getInstance().updateErrorLog(ex);
             }
         });
-        
+
         modernContentPanel.addQuickAction("Ver Mapa", () -> {
             try {
                 MapperGestion dialog = new MapperGestion(this, false, connection, null, operationsCRUD, itemsCRUD, null);
@@ -1332,7 +1364,7 @@ public class DashBoard extends JFrame {
             }
         });
     }
-    
+
     private void showDialog(JDialog dialog) {
         dialog.setLocationRelativeTo(this);
         dialog.setResizable(true);
