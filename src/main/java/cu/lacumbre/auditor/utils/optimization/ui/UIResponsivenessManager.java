@@ -1,5 +1,8 @@
 package cu.lacumbre.auditor.utils.optimization.ui;
 
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.AbstractButton;
@@ -13,7 +16,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
-import org.apache.poi.ss.usermodel.Color;
+import java.awt.Color;
 
 public class UIResponsivenessManager {
     private static final int UI_UPDATE_DELAY = 100; // ms

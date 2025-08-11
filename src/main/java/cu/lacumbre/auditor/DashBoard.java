@@ -1,31 +1,18 @@
 package cu.lacumbre.auditor;
 
-import cu.lacumbre.auditor.crud.DaysController;
-import cu.lacumbre.auditor.crud.EntitiesCRUD;
-import cu.lacumbre.auditor.crud.ItemsCRUD;
-import java.awt.BorderLayout;
-import java.awt.CardLayout;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.InputEvent;
-import java.awt.event.KeyEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowFocusListener;
 import java.io.IOException;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.Properties;
 import java.util.logging.Level;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -39,10 +26,18 @@ import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 
+import cu.lacumbre.auditor.crud.DaysController;
+import cu.lacumbre.auditor.crud.EntitiesCRUD;
+import cu.lacumbre.auditor.crud.ItemsCRUD;
 import cu.lacumbre.auditor.crud.OperationsCRUD;
 import cu.lacumbre.auditor.crud.PostgreSQL;
 import cu.lacumbre.auditor.crud.WorkersCRUD;
+import cu.lacumbre.auditor.utils.ui.DashboardView;
+import cu.lacumbre.auditor.utils.ui.ModernContentPanel;
+import cu.lacumbre.auditor.utils.ui.ModernSidePanel;
+import cu.lacumbre.auditor.utils.ui.ModernThemeManager;
 import cu.lacumbre.auditor.view.inventory.AdjustNotSoldProducts;
+import cu.lacumbre.auditor.view.inventory.Inventory;
 import cu.lacumbre.auditor.view.inventory.LoadCSV;
 import cu.lacumbre.auditor.view.inventory.MakeSale;
 import cu.lacumbre.auditor.view.inventory.MapperGestion;
@@ -52,20 +47,19 @@ import cu.lacumbre.auditor.view.merchandise.ExpensesGestion;
 import cu.lacumbre.auditor.view.merchandise.MeasureUnitsGestion;
 import cu.lacumbre.auditor.view.merchandise.ProductsGestion;
 import cu.lacumbre.auditor.view.merchandise.RawMaterialsGestion;
+import cu.lacumbre.auditor.view.merchandise.TPVCategoriesGestion;
 import cu.lacumbre.auditor.view.merchandise.WorkablesGestion;
 import cu.lacumbre.auditor.view.operations.ExpensesOperGestion;
 import cu.lacumbre.auditor.view.operations.IncomesOperGestion;
-import cu.lacumbre.auditor.view.inventory.Inventory;
-import cu.lacumbre.auditor.view.merchandise.TPVCategoriesGestion;
 import cu.lacumbre.auditor.view.operations.OutcomesOperGestion;
 import cu.lacumbre.auditor.view.operations.SaleOperGestion;
 import cu.lacumbre.auditor.view.operations.TransferOperGestion;
-import cu.lacumbre.auditor.view.reports.R_PeriodSales;
+import cu.lacumbre.auditor.view.reports.DialogReportsProducts;
+import cu.lacumbre.auditor.view.reports.DialogReportsRawMaterials;
 import cu.lacumbre.auditor.view.reports.R_PeriodIncomes;
 import cu.lacumbre.auditor.view.reports.R_PeriodMovements;
 import cu.lacumbre.auditor.view.reports.R_PeriodOutcomes;
-import cu.lacumbre.auditor.view.reports.DialogReportsProducts;
-import cu.lacumbre.auditor.view.reports.DialogReportsRawMaterials;
+import cu.lacumbre.auditor.view.reports.R_PeriodSales;
 import cu.lacumbre.auditor.view.settings.SettingsDialog;
 import cu.lacumbre.auditor.view.utils.CreateCuadreFile;
 import cu.lacumbre.auditor.view.utils.CustomComparator;
@@ -74,9 +68,27 @@ import cu.lacumbre.auditor.view.workers.RolesGestion;
 import cu.lacumbre.auditor.view.workers.StaffGestion;
 import cu.lacumbre.utils.Logger;
 import cu.lacumbre.utils.Settings;
-import java.sql.Connection;
+import java.awt.BorderLayout;
+import java.awt.CardLayout;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowFocusListener;
 
 public class DashBoard extends JFrame {
+    private ModernSidePanel modernSidePanel;
+    private ModernContentPanel modernContentPanel;
+    private DashboardView dashboardView;
+    private CardLayout mainCardLayout;
+    private JPanel mainPanel;
 
     private PostgreSQL postgreSQL;
     private Connection connection;
@@ -145,29 +157,40 @@ public class DashBoard extends JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-
-        sideMenu = new JPanel();
-        panelMenu = new JPanel();
-        jPanel12 = new JPanel();
-        jPanel11 = new JPanel();
-        jPanel10 = new JPanel();
-        jPanel9 = new JPanel();
-        panelOptions = new JPanel();
-        jPanel1 = new JPanel();
-        jPanel3 = new JPanel();
-        jPanel4 = new JPanel();
-        jButton5 = new JButton();
-        jPanel5 = new JPanel();
-        jPanel6 = new JPanel();
-        jPanel7 = new JPanel();
-        panelSession = new JPanel();
-        jButton6 = new JButton();
-        jButton7 = new JButton();
-        jPanel8 = new JPanel();
-        jButton8 = new JButton();
-        btnCloseEntity = new JButton();
-        mainPanelSeprator = new JSeparator();
-        mainContent = new JPanel();
+        // Inicializar el tema moderno
+        ModernThemeManager.setupModernTheme();
+        
+        // Panel lateral moderno
+        modernSidePanel = new ModernSidePanel();
+        
+        // Panel de contenido moderno con dashboard
+        dashboardView = new DashboardView();
+        modernContentPanel = new ModernContentPanel();
+        modernContentPanel.setTitle("Bienvenido a Auditor");
+        modernContentPanel.setContent(dashboardView);
+        
+        // Configuración básica de la ventana
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Auditor para " + Setup.enterpriseName + " en " + EntitySelector.currentEntity.getDescription());
+        setMinimumSize(new Dimension(1200, 700));
+        
+        // Crear estructura principal
+        Container contentPane = getContentPane();
+        contentPane.setLayout(new BorderLayout());
+        
+        // Agregar paneles principales
+        contentPane.add(modernSidePanel, BorderLayout.WEST);
+        contentPane.add(modernContentPanel, BorderLayout.CENTER);
+        
+        // Configurar menú lateral
+        setupSideMenu();
+        
+        // Agregar acciones rápidas al panel de contenido
+        setupQuickActions();
+        
+        // Configurar estado inicial
+        pack();
+        setLocationRelativeTo(null);
         mainNorth = new JPanel();
         jSeparator8 = new JSeparator();
         jPanel2 = new JPanel();
@@ -1237,6 +1260,84 @@ public class DashBoard extends JFrame {
     private JPanel panelSession;
     private JPanel sideMenu;
     // End of variables declaration//GEN-END:variables
+    
+    private void setupSideMenu() {
+        // Operaciones
+        modernSidePanel.addMenuItem("Ventas", "/icons/sale.png").addActionListener(e -> {
+            SaleOperGestion dialog = new SaleOperGestion(this, false, operationsCRUD, itemsCRUD, false);
+            showDialog(dialog);
+        });
+        
+        modernSidePanel.addMenuItem("Materias Primas", "/icons/raw-material.png").addActionListener(e -> {
+            RawMaterialsGestion dialog = new RawMaterialsGestion(this, false, operationsCRUD, itemsCRUD);
+            showDialog(dialog);
+        });
+        
+        modernSidePanel.addMenuItem("Inventario", "/icons/inventory.png").addActionListener(e -> {
+            Inventory dialog = new Inventory(this, operationsCRUD, false);
+            showDialog(dialog);
+        });
+        
+        modernSidePanel.addMenuItem("Personal", "/icons/staff.png").addActionListener(e -> {
+            StaffGestion dialog = new StaffGestion(this, workersCRUD, false);
+            showDialog(dialog);
+        });
+        
+        // Separador
+        modernSidePanel.add(Box.createVerticalStrut(20));
+        
+        // Gestión
+        modernSidePanel.addMenuItem("Gastos", "/icons/expenses.png").addActionListener(e -> {
+            ExpensesGestion dialog = new ExpensesGestion(this, itemsCRUD, false);
+            showDialog(dialog);
+        });
+        
+        modernSidePanel.addMenuItem("Documentos", "/icons/documents.png").addActionListener(e -> {
+            try {
+                DocumentsGestion dialog = new DocumentsGestion(this, false, connection, workersCRUD);
+                showDialog(dialog);
+            } catch (SQLException ex) {
+                Logger.getInstance().updateErrorLog(ex);
+            }
+        });
+        
+        // Separador
+        modernSidePanel.add(Box.createVerticalStrut(20));
+        
+        // Configuración
+        modernSidePanel.addMenuItem("Configuración", "/icons/settings.png").addActionListener(e -> {
+            // Implementar diálogo de configuración
+        });
+        
+        // Botón de cambio de entidad en la parte inferior
+        JButton changeEntityBtn = modernSidePanel.addMenuItem("Cambiar Entidad", "/icons/switch.png");
+        changeEntityBtn.addActionListener(e -> btnCloseEntityActionPerformed(e));
+    }
+    
+    private void setupQuickActions() {
+        modernContentPanel.addQuickAction("Generar Cuadre", () -> {
+            try {
+                CreateCuadreFile.execute(connection, itemsCRUD);
+            } catch (SQLException | IOException ex) {
+                Logger.getInstance().updateErrorLog(ex);
+            }
+        });
+        
+        modernContentPanel.addQuickAction("Ver Mapa", () -> {
+            try {
+                MapperGestion dialog = new MapperGestion(this, false, connection, null, operationsCRUD, itemsCRUD, null);
+                showDialog(dialog);
+            } catch (SQLException ex) {
+                Logger.getInstance().updateErrorLog(ex);
+            }
+        });
+    }
+    
+    private void showDialog(JDialog dialog) {
+        dialog.setLocationRelativeTo(this);
+        dialog.setResizable(true);
+        dialog.setVisible(true);
+    }
 
     private void refreshCruds() {
         try {

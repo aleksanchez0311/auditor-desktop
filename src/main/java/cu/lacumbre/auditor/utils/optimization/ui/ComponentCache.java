@@ -5,9 +5,13 @@ import java.util.WeakHashMap;
 
 import javax.swing.JComponent;
 
-import org.jdesktop.swingx.decorator.ComponentAdapter;
+import java.awt.event.ComponentAdapter;
 
-import com.lowagie.text.Image;
+import java.awt.Image;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.event.ComponentEvent;
 
 public class ComponentCache {
     private static final Map<JComponent, Image> bufferCache = new WeakHashMap<>();
@@ -53,7 +57,7 @@ public class ComponentCache {
             if (bufferGraphics instanceof Graphics2D) {
                 Graphics2D g2d = (Graphics2D) bufferGraphics;
                 g2d.setRenderingHint(
-                    RenderingHints.KEY_ANTIALIASING,
+                        RenderingHints.KEY_ANTIALIASING,
                     RenderingHints.VALUE_ANTIALIAS_ON
                 );
                 g2d.setRenderingHint(
